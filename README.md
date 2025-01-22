@@ -129,7 +129,6 @@ php artisan view:cache
      ```env
      APP_DEBUG=true
      ```
-
 ---
 
 For further assistance, contact the developer or refer to the Laravel [official documentation](https://laravel.com/docs).
