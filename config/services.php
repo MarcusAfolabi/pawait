@@ -16,6 +16,7 @@ return [
     'openweather' => [
         'key' => env('OPENWEATHER_API_KEY'),
         'base_url' => env('OPENWEATHER_BASE_URL'),
+        'one_call' => env('OPENWEATHER_ONECALL_BASE_URL'),
     ],
 
     'postmark' => [
