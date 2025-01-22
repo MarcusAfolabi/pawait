@@ -13,6 +13,10 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    'openweather' => [
+        'key' => env('OPENWEATHER_API_KEY'),
+        'base_url' => env('OPENWEATHER_BASE_URL'),
+    ],
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
