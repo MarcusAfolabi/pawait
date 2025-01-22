@@ -26,7 +26,6 @@ class WeatherService
             'units' => $units,
         ]);
 
-        info($currentWeatherResponse->json());
         if ($currentWeatherResponse->failed()) {
             throw new \Exception('Failed to fetch weather data.');
         }
