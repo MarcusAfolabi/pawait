@@ -8,17 +8,19 @@ class WeatherService
 {
     protected $baseUrl;
     protected $apiKey;
+    protected $oneCall;
 
     public function __construct()
     {
         $this->baseUrl = config('services.openweather.base_url');
         $this->apiKey = config('services.openweather.key');
+        $this->oneCall = config('services.openweather.one_call');
     }
 
     public function fetchWeather(string $city, string $units = 'metric')
     {
         // Step 1: Fetch coordinates (lat & lon) using the current endpoint
-        $currentWeatherResponse = Http::get("{$this->baseUrl}/weather", [
+        $currentWeatherResponse = Http::get("{$this->baseUrl}", [
             'q' => $city,
             'appid' => $this->apiKey,
             'units' => $units,
@@ -34,7 +36,7 @@ class WeatherService
         $lon = $currentWeather['coord']['lon'];
 
         // Step 2: Fetch 3-day forecast using the One Call API
-        $forecastResponse = Http::get("https://api.openweathermap.org/data/3.0/onecall", [
+        $forecastResponse = Http::get("{$this->oneCall}", [
             'lat' => $lat,
             'lon' => $lon,
             'exclude' => 'minutely,hourly,alerts',
