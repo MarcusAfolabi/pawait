@@ -1,66 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Documentation for Installing the Laravel API Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Prerequisites
+Before proceeding with the installation, ensure the following tools and environments are set up on your local machine:
 
-## About Laravel
+1. **PHP**: Version 8.2 or higher.
+2. **Composer**: Dependency management tool for PHP.
+3. **Database Server**: MySQL or MariaDB.
+4. **Node.js and npm**: For managing front-end assets (optional for this API).
+5. **Git**: For cloning the repository.
+6. **Web Server**: Apache or Nginx with Laravel configuration (such as Herd, Laragon or Xamp).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Step-by-Step Installation Guide
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Clone the Repository
+Clone the Laravel API repository to your local machine:
+```bash
+git clone https://github.com/MarcusAfolabi/pawait.git
+cd pawait
+```
 
-## Learning Laravel
+### 2. Install Dependencies
+Install the necessary PHP dependencies using Composer:
+```bash
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3. Configure Environment Variables
+1. Copy the `.env.example` file to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open the `.env` file in a text editor and configure the following variables:
+   - **Database Settings**:
+     ```env
+     DB_CONNECTION=mysql
+     DB_HOST=127.0.0.1
+     DB_PORT=3306
+     DB_DATABASE=your_database_name
+     DB_USERNAME=your_database_user
+     DB_PASSWORD=your_database_password
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    
+     ```
+   - **API Key**:
+     ```env
+    OPENWEATHER_API_KEY='a73fc4cadb24a441bf20e98add69bb31'
+    OPENWEATHER_BASE_URL='https://api.openweathermap.org/data/2.5/weather'
+    OPENWEATHER_ONECALL_BASE_URL='https://api.openweathermap.org/data/3.0/onecall'
+     ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 4. Generate Application Key
+Run the following command to generate the application key:
+```bash
+php artisan key:generate
+```
 
-## Laravel Sponsors
+### 5. Run Database Migrations
+Set up the database tables by running migrations:
+```bash
+php artisan migrate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 6. (Optional) Seed the Database
+If the application requires initial data, seed the database:
+```bash
+php artisan db:seed
+```
 
-### Premium Partners
+### 7. Serve the Application Locally
+To test the application, start the development server:
+```bash
+php artisan serve
+```
+Access the application at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## Deployment Steps
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Set Up a Web Server
+- Use **Apache** or **Nginx** to serve the Laravel application.
+- Ensure the `public` folder is set as the document root.
 
-## Code of Conduct
+### 2. Configure File Permissions
+Set appropriate permissions for the `storage` and `bootstrap/cache` directories:
+```bash
+chmod -R 775 storage
+chmod -R 775 bootstrap/cache
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Configure `.env` for Production
+Update the `.env` file with production settings, including the database and API keys.
 
-## Security Vulnerabilities
+### 4. Run Optimizations
+For production environments, optimize the application:
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Testing the API
+1. Use tools like Postman or cURL to test the API endpoints.
+2. Example request to test weather endpoint:
+   ```bash
+   curl http://127.0.0.1:8000/api/v1/weather?city=Nairobi&units=metric
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Troubleshooting
+1. **Database Connection Issues**:
+   - Ensure the database credentials in `.env` are correct.
+   - Verify the database server is running.
+
+2. **Missing Dependencies**:
+   - Run `composer install` to ensure all PHP packages are installed.
+
+3. **Permission Errors**:
+   - Ensure proper permissions for `storage` and `bootstrap/cache` directories.
+
+4. **Debugging**:
+   - Enable debug mode in `.env` for development:
+     ```env
+     APP_DEBUG=true
+     ```
+
+---
+
+For further assistance, contact the developer or refer to the Laravel [official documentation](https://laravel.com/docs).
+
